@@ -40,3 +40,62 @@
 .read-the-docs {
   color: #888;
 }
+
+.app {
+  padding: 20px;
+  background-color: #1a1a1a;
+  min-height: 100vh;
+  color: white;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.controls {
+  display: flex;
+  gap: 10px;
+}
+
+.controls button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.controls button:first-child {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.controls button:last-child {
+  background-color: #f44336;
+  color: white;
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 20px;
+}
+
+.chart-container {
+  background-color: #222;
+  border-radius: 8px;
+  padding: 15px;
+}
+
+.chart-container h2 {
+  margin: 0 0 15px 0;
+  color: #DDD;
+}
+
+.chart {
+  height: 300px;
+  width: 100%;
+}
