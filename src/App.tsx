@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { io } from 'socket.io-client'
-import CandlestickChart from './components/CandlestickChart'
+import TradingPanel from './components/TradingPanel'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import './App.css'
 
 const SYMBOLS = ['ETHUSDT', 'BTCUSDT', 'AVAXUSDT', 'SOLUSDT', 'RENDERUSDT', 'FETUSDT']
@@ -38,8 +40,18 @@ function App() {
       });
       
       const data = await response.json();
-      console.log('Trading started:', data);
+      
+      if (data.errors) {
+        toast.error(`Trading errors: ${data.errors}`);
+      } else if (data.started_pairs && data.started_pairs.length > 0) {
+        toast.success(`Trading started for: ${data.started_pairs.join(', ')}`);
+      } else {
+        toast.error('No pairs were started');
+      }
+      
+      console.log('Trading response:', data);
     } catch (error) {
+      toast.error(`Error starting trading: ${error instanceof Error ? error.message : 'Unknown error'}`);
       console.error('Error starting trading:', error);
     }
   };
@@ -53,15 +65,38 @@ function App() {
         },
         body: JSON.stringify({})
       });
+      
       const data = await response.json();
-      console.log('Trading stopped:', data);
+      
+      if (data.errors) {
+        toast.error(`Trading errors: ${data.errors}`);
+      } else if (data.stopped_pairs && data.stopped_pairs.length > 0) {
+        toast.success(`Trading stopped for: ${data.stopped_pairs.join(', ')}`);
+      } else {
+        toast.error('No pairs were stopped');
+      }
+      
+      console.log('Trading response:', data);
     } catch (error) {
+      toast.error(`Error stopping trading: ${error instanceof Error ? error.message : 'Unknown error'}`);
       console.error('Error stopping trading:', error);
     }
   };
 
   return (
     <div className="app">
+      <ToastContainer 
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
       <div className="header">
         <h1>Crypto Trading Dashboard</h1>
         <div className="controls">
@@ -69,11 +104,10 @@ function App() {
           <button onClick={stopTrading}>Stop Trading</button>
         </div>
       </div>
-      <div className="charts-grid">
+      <div className="panels-grid">
         {SYMBOLS.map((symbol) => (
-          <div key={symbol} className="chart-container">
-            <h2>{symbol}</h2>
-            {socket && <CandlestickChart socket={socket} symbol={symbol} />}
+          <div key={symbol}>
+            {socket && <TradingPanel socket={socket} symbol={symbol} />}
           </div>
         ))}
       </div>

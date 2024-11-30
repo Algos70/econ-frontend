@@ -1,0 +1,73 @@
+.signal-console {
+  height: 300px;
+  overflow-y: auto;
+  background-color: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 10px;
+  font-family: monospace;
+  font-size: 12px;
+}
+
+.signal-entry {
+  margin-bottom: 8px;
+  padding: 8px;
+  border-radius: 4px;
+  background-color: #222;
+}
+
+.signal-entry.buy {
+  border-left: 3px solid #26a69a;
+}
+
+.signal-entry.sell {
+  border-left: 3px solid #ef5350;
+}
+
+.signal-time {
+  color: #888;
+  font-size: 11px;
+  margin-bottom: 4px;
+}
+
+.signal-type {
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.signal-price,
+.signal-profit,
+.signal-balance,
+.signal-total-profit,
+.signal-trades {
+  color: #ddd;
+  margin-bottom: 2px;
+}
+
+.signal-profit.profit,
+.signal-total-profit.profit {
+  color: #26a69a;
+}
+
+.signal-profit.loss,
+.signal-total-profit.loss {
+  color: #ef5350;
+}
+
+/* Scrollbar styling */
+.signal-console::-webkit-scrollbar {
+  width: 8px;
+}
+
+.signal-console::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+.signal-console::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+
+.signal-console::-webkit-scrollbar-thumb:hover {
+  background: #444;
+} 
