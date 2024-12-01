@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import './App.css'
 import TradeParametersForm, { TradeParameters } from './components/TradeParametersForm'
+import BacktestPanel from './components/BacktestPanel'
 
 const SYMBOLS = ['ETHUSDT', 'BTCUSDT', 'AVAXUSDT', 'SOLUSDT', 'RENDERUSDT', 'FETUSDT']
 const API_URL = 'http://127.0.0.1:5000'
@@ -20,6 +21,9 @@ function App() {
     rsi_overbought: 70
   });
   const [isTrading, setIsTrading] = useState(false);
+  const [showBacktest, setShowBacktest] = useState(false);
+  const [backtestResults, setBacktestResults] = useState<{[key: string]: any}>({});
+  const [isBacktesting, setIsBacktesting] = useState(false);
 
   useEffect(() => {
     const newSocket = io(API_URL)
@@ -108,6 +112,36 @@ function App() {
     }
   };
 
+  const runAllBacktests = async () => {
+    setIsBacktesting(true);
+    const results: {[key: string]: any} = {};
+    
+    try {
+      await Promise.all(SYMBOLS.map(async (symbol) => {
+        const response = await fetch('http://127.0.0.1:5000/api/backtest', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            symbol,
+            parameters: tradeParameters
+          })
+        });
+        
+        const data = await response.json();
+        results[symbol] = data.results;
+      }));
+      
+      setBacktestResults(results);
+    } catch (error) {
+      toast.error(`Error running backtests: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      console.error('Error running backtests:', error);
+    }
+    
+    setIsBacktesting(false);
+  };
+
   return (
     <div className="app">
       <ToastContainer 
@@ -124,23 +158,46 @@ function App() {
       />
       <div className="header">
         <h1>Crypto Trading Dashboard</h1>
-        <TradeParametersForm onSubmit={setTradeParameters} />
-        <div className="controls">
-          {!isTrading ? (
-            <button onClick={startTrading}>Start Trading</button>
-          ) : (
-            <button onClick={updateTrading}>Update Trading</button>
-          )}
-          <button onClick={stopTrading}>Stop Trading</button>
+        <div className="view-controls">
+          <button onClick={() => setShowBacktest(false)}>Live Trading</button>
+          <button onClick={() => setShowBacktest(true)}>Backtest</button>
         </div>
-      </div>
-      <div className="panels-grid">
-        {SYMBOLS.map((symbol) => (
-          <div key={symbol}>
-            {socket && <TradingPanel socket={socket} symbol={symbol} />}
+        <TradeParametersForm onSubmit={setTradeParameters} />
+        {!showBacktest ? (
+          <div className="controls">
+            {!isTrading ? (
+              <button onClick={startTrading}>Start Trading</button>
+            ) : (
+              <button onClick={updateTrading}>Update Trading</button>
+            )}
+            <button onClick={stopTrading}>Stop Trading</button>
           </div>
-        ))}
+        ) : (
+          <div className="controls">
+            <button onClick={runAllBacktests} disabled={isBacktesting}>
+              {isBacktesting ? 'Running Backtests...' : 'Run All Backtests'}
+            </button>
+          </div>
+        )}
       </div>
+      
+      {showBacktest ? (
+        <div className="panels-grid">
+          {Object.keys(backtestResults).map((symbol) => (
+            <div key={symbol}>
+              <BacktestPanel symbol={symbol} results={backtestResults[symbol]} />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="panels-grid">
+          {SYMBOLS.map((symbol) => (
+            <div key={symbol}>
+              {socket && <TradingPanel socket={socket} symbol={symbol} />}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   )
 }

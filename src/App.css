@@ -128,3 +128,111 @@
 .trade-parameters-form button:hover {
   background: #45a049;
 }
+
+.view-controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.view-controls button {
+  padding: 8px 16px;
+  background: #2196F3;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+}
+
+.view-controls button:hover {
+  background: #1976D2;
+}
+
+.backtest-panel {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.backtest-controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.backtest-controls button,
+.backtest-controls select {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  background: #4CAF50;
+  color: white;
+  cursor: pointer;
+}
+
+.backtest-controls button:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+}
+
+.backtest-controls select {
+  background: #2196F3;
+}
+
+.backtest-stats {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.backtest-stats p {
+  margin: 0;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.backtest-chart {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.timeframes-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.timeframe-chart {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.backtest-panel h2 {
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.backtest-stats {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.backtest-stats p {
+  margin: 0;
+  padding: 5px 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.backtest-chart {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
