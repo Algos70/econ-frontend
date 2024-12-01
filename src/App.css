@@ -205,10 +205,11 @@
 
 .backtest-chart {
   background: rgba(0, 0, 0, 0.2);
-  padding: 20px;
+  padding: 10px;
   border-radius: 8px;
   margin-bottom: 15px;
   height: 800px;
+  width: 100%;
 }
 
 .timeframes-grid {
@@ -225,6 +226,7 @@
   padding: 30px;
   border-radius: 8px;
   min-height: 700px;
+  width: 100%;
 }
 
 .backtest-panel h2 {
@@ -251,6 +253,8 @@
   padding: 10px;
   border-radius: 8px;
   margin-bottom: 15px;
+  height: 800px;
+  width: 100%;
 }
 
 .signals-table-container {
