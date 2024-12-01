@@ -4,12 +4,22 @@ import TradingPanel from './components/TradingPanel'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import './App.css'
+import TradeParametersForm, { TradeParameters } from './components/TradeParametersForm'
 
 const SYMBOLS = ['ETHUSDT', 'BTCUSDT', 'AVAXUSDT', 'SOLUSDT', 'RENDERUSDT', 'FETUSDT']
 const API_URL = 'http://127.0.0.1:5000'
 
 function App() {
   const [socket, setSocket] = useState<any>(null)
+  const [tradeParameters, setTradeParameters] = useState<TradeParameters>({
+    longterm_sma: 20,
+    shortterm_sma: 8,
+    rsi_period: 8,
+    bb_lenght: 20,
+    rsi_oversold: 30,
+    rsi_overbought: 70
+  });
+  const [isTrading, setIsTrading] = useState(false);
 
   useEffect(() => {
     const newSocket = io(API_URL)
@@ -22,15 +32,6 @@ function App() {
 
   const startTrading = async () => {
     try {
-      const tradeParameters = {
-        longterm_sma: 20,
-        shortterm_sma: 8,
-        rsi_period: 8,
-        bb_lenght: 20,
-        rsi_oversold: 30,
-        rsi_overbought: 70
-      };
-
       const response = await fetch(`${API_URL}/api/start-trade`, {
         method: 'POST',
         headers: {
@@ -45,14 +46,38 @@ function App() {
         toast.error(`Trading errors: ${data.errors}`);
       } else if (data.started_pairs && data.started_pairs.length > 0) {
         toast.success(`Trading started for: ${data.started_pairs.join(', ')}`);
+        setIsTrading(true);
       } else {
         toast.error('No pairs were started');
       }
       
-      console.log('Trading response:', data);
     } catch (error) {
       toast.error(`Error starting trading: ${error instanceof Error ? error.message : 'Unknown error'}`);
       console.error('Error starting trading:', error);
+    }
+  };
+
+  const updateTrading = async () => {
+    try {
+      const response = await fetch(`${API_URL}/api/update-trade-parameters`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ parameters: tradeParameters })
+      });
+      
+      const data = await response.json();
+      
+      if (data.errors) {
+        toast.error(`Update errors: ${data.errors}`);
+      } else {
+        toast.success('Trading parameters updated successfully');
+      }
+      
+    } catch (error) {
+      toast.error(`Error updating parameters: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      console.error('Error updating parameters:', error);
     }
   };
 
@@ -72,11 +97,11 @@ function App() {
         toast.error(`Trading errors: ${data.errors}`);
       } else if (data.stopped_pairs && data.stopped_pairs.length > 0) {
         toast.success(`Trading stopped for: ${data.stopped_pairs.join(', ')}`);
+        setIsTrading(false);
       } else {
         toast.error('No pairs were stopped');
       }
       
-      console.log('Trading response:', data);
     } catch (error) {
       toast.error(`Error stopping trading: ${error instanceof Error ? error.message : 'Unknown error'}`);
       console.error('Error stopping trading:', error);
@@ -99,8 +124,13 @@ function App() {
       />
       <div className="header">
         <h1>Crypto Trading Dashboard</h1>
+        <TradeParametersForm onSubmit={setTradeParameters} />
         <div className="controls">
-          <button onClick={startTrading}>Start Trading</button>
+          {!isTrading ? (
+            <button onClick={startTrading}>Start Trading</button>
+          ) : (
+            <button onClick={updateTrading}>Update Trading</button>
+          )}
           <button onClick={stopTrading}>Stop Trading</button>
         </div>
       </div>
