@@ -243,3 +243,77 @@
   border-radius: 8px;
   margin-bottom: 15px;
 }
+
+.signals-table-container {
+  margin-top: 30px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.signals-table-container h3 {
+  margin-bottom: 15px;
+  color: #fff;
+}
+
+.signals-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.signals-table th,
+.signals-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.signals-table th {
+  background: rgba(255, 255, 255, 0.1);
+  font-weight: bold;
+  color: #fff;
+}
+
+.signals-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.signal-row.buy {
+  background: rgba(0, 255, 0, 0.1);
+}
+
+.signal-row.sell {
+  background: rgba(255, 0, 0, 0.1);
+}
+
+.signal-row.stop_loss {
+  background: rgba(255, 165, 0, 0.1);
+}
+
+.signals-table-container {
+  max-height: 400px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) rgba(0, 0, 0, 0.2);
+}
+
+.signals-table-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.signals-table-container::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.signals-table-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+.signals-table-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
+}

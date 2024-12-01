@@ -28,6 +28,14 @@ interface BacktestPanelProps {
   results: any;
 }
 
+interface Signal {
+  date: string;
+  type: string;
+  price: number;
+  amount: number;
+  total: number;
+}
+
 export default function BacktestPanel({ symbol, results }: BacktestPanelProps) {
   const timeframes = ['15m', '1h', '4h', '1d'];
 
@@ -55,23 +63,33 @@ export default function BacktestPanel({ symbol, results }: BacktestPanelProps) {
           data: df.map((row: any) => ({ x: new Date(row.Date), y: row.Close })),
           borderColor: 'rgb(75, 192, 192)',
           tension: 0.1,
-          pointRadius: 0
+          pointRadius: 0,
+          borderWidth: 1,
+          order: 1
         },
         {
           label: 'Buy Signals',
           data: buySignals,
-          backgroundColor: 'green',
-          pointRadius: 5,
+          backgroundColor: 'rgba(0, 255, 0, 0.8)',
+          borderColor: 'rgba(0, 255, 0, 1)',
+          pointRadius: 12,
           pointStyle: 'triangle',
-          showLine: false
+          rotation: 0,
+          borderWidth: 2,
+          showLine: false,
+          order: 0
         },
         {
           label: 'Sell Signals',
           data: sellSignals,
-          backgroundColor: 'red',
-          pointRadius: 5,
+          backgroundColor: 'rgba(255, 0, 0, 0.8)',
+          borderColor: 'rgba(255, 0, 0, 1)',
+          pointRadius: 12,
           pointStyle: 'triangle',
-          showLine: false
+          rotation: 180,
+          borderWidth: 2,
+          showLine: false,
+          order: 0
         }
       ]
     };
@@ -90,10 +108,30 @@ export default function BacktestPanel({ symbol, results }: BacktestPanelProps) {
     plugins: {
       title: {
         display: true,
-        text: `${symbol} - ${timeframe}`
+        text: `${symbol} - ${timeframe}`,
+        font: {
+          size: 16
+        }
+      },
+      legend: {
+        labels: {
+          font: {
+            size: 14
+          }
+        }
+      }
+    },
+    elements: {
+      point: {
+        hitRadius: 8,
+        hoverRadius: 14
       }
     }
   });
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleString();
+  };
 
   return (
     <div className="backtest-panel">
@@ -110,6 +148,31 @@ export default function BacktestPanel({ symbol, results }: BacktestPanelProps) {
               {prepareChartData(timeframe) && (
                 <Line data={prepareChartData(timeframe)!} options={chartOptions(timeframe)} />
               )}
+            </div>
+            <div className="signals-table-container">
+              <h3>{timeframe} Signals</h3>
+              <table className="signals-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Price</th>
+                    <th>Amount</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {results[timeframe].signals.map((signal: Signal, index: number) => (
+                    <tr key={index} className={`signal-row ${signal.type.toLowerCase()}`}>
+                      <td>{formatDate(signal.date)}</td>
+                      <td>{signal.type}</td>
+                      <td>${signal.price.toFixed(2)}</td>
+                      <td>{signal.amount.toFixed(6)}</td>
+                      <td>${signal.total.toFixed(2)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
         ))}

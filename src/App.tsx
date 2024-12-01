@@ -117,6 +117,11 @@ function App() {
     const results: {[key: string]: any} = {};
     
     try {
+      toast.info('Starting backtests for all symbols...', {
+        position: "top-right",
+        autoClose: 2000
+      });
+
       await Promise.all(SYMBOLS.map(async (symbol) => {
         const response = await fetch('http://127.0.0.1:5000/api/backtest', {
           method: 'POST',
@@ -130,10 +135,22 @@ function App() {
         });
         
         const data = await response.json();
+        
+        if (data.status === 'error') {
+          toast.error(`Error in ${symbol} backtest: ${data.message}`);
+          return;
+        }
+        
         results[symbol] = data.results;
+        toast.success(`Backtest completed for ${symbol}`);
       }));
       
       setBacktestResults(results);
+      toast.success('All backtests completed successfully!', {
+        position: "top-right",
+        autoClose: 5000
+      });
+      
     } catch (error) {
       toast.error(`Error running backtests: ${error instanceof Error ? error.message : 'Unknown error'}`);
       console.error('Error running backtests:', error);
