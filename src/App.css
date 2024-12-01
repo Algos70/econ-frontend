@@ -194,6 +194,10 @@
   display: flex;
   gap: 20px;
   margin-bottom: 20px;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
 }
 
 .backtest-stats p {
@@ -209,7 +213,10 @@
   border-radius: 8px;
   margin-bottom: 15px;
   height: 800px;
-  width: 100%;
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
 }
 
 .timeframes-grid {
@@ -217,6 +224,8 @@
   flex-direction: column;
   gap: 40px;
   width: 100%;
+  box-sizing: border-box;
+  padding: 20px;
 }
 
 .timeframe-chart {
@@ -226,7 +235,11 @@
   padding: 30px;
   border-radius: 8px;
   min-height: 700px;
-  width: 100%;
+  width: 90%;
+  max-width: 90%;
+  margin: 0 auto;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .backtest-panel h2 {
@@ -254,7 +267,9 @@
   border-radius: 8px;
   margin-bottom: 15px;
   height: 800px;
-  width: 100%;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .signals-table-container {
@@ -262,6 +277,14 @@
   background: rgba(0, 0, 0, 0.2);
   border-radius: 8px;
   padding: 20px;
+  max-height: 400px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) rgba(0, 0, 0, 0.2);
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
 }
 
 .signals-table-container h3 {
@@ -304,13 +327,6 @@
 
 .signal-row.stop_loss {
   background: rgba(255, 165, 0, 0.1);
-}
-
-.signals-table-container {
-  max-height: 400px;
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.3) rgba(0, 0, 0, 0.2);
 }
 
 .signals-table-container::-webkit-scrollbar {
