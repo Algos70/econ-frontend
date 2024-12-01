@@ -16,7 +16,7 @@ const CandlestickChart = ({ socket, symbol }: Props) => {
 
     // Create the chart
     const chart = createChart(chartContainerRef.current, {
-      width: 400,
+      width: chartContainerRef.current.clientWidth,
       height: 300,
       layout: {
         background: { color: '#222' },

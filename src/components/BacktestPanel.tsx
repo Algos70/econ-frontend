@@ -141,7 +141,7 @@ export default function BacktestPanel({ symbol, results }: BacktestPanelProps) {
         text: `${symbol} - ${timeframe}`,
         font: {
           size: 20,
-          weight: 'bold'
+          weight: 'bold' as const
         },
         padding: 20
       },
@@ -155,7 +155,7 @@ export default function BacktestPanel({ symbol, results }: BacktestPanelProps) {
         position: 'top' as const
       },
       tooltip: {
-        mode: 'index',
+        mode: 'index' as const,
         intersect: false,
         backgroundColor: 'rgba(0, 0, 0, 0.8)',
         titleFont: {
@@ -183,8 +183,8 @@ export default function BacktestPanel({ symbol, results }: BacktestPanelProps) {
       }
     },
     interaction: {
-      mode: 'nearest',
-      axis: 'x',
+      mode: 'x' as const,
+      axis: 'x' as const,
       intersect: false
     },
     elements: {
