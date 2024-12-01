@@ -46,7 +46,7 @@
 }
 
 .app {
-  padding: 20px;
+  padding: 0;
   background-color: #1a1a1a;
   min-height: 100vh;
   color: white;
@@ -57,34 +57,53 @@
   width: 100%;
 }
 
-.header {
+.fixed-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #1a1a1a;
+  z-index: 1000;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.5rem;
+  height: 60px;
+}
+
+.header-content {
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  height: 100%;
+}
+
+.header-top {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100%;
+}
+
+.header-section {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  margin-bottom: 20px;
+  justify-content: center;
 }
 
-.controls {
-  display: flex;
-  gap: 10px;
+.logo-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fff;
 }
 
-.controls button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
+.main-content {
+  margin-top: 60px;
+  padding: 2rem;
 }
 
-.controls button:first-child {
-  background-color: #4CAF50;
-  color: white;
-}
-
-.controls button:last-child {
-  background-color: #f44336;
-  color: white;
+.trading-controls {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
 }
 
 .panels-grid {
@@ -101,7 +120,6 @@
   margin: 20px 0;
   padding: 20px;
   background: rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
 }
 
 .form-group {
@@ -141,8 +159,7 @@
 
 .view-controls {
   display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
+  gap: 12px;
 }
 
 .view-controls button {
@@ -345,4 +362,48 @@
 
 .signals-table-container::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.4);
+}
+
+.controls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 10px 0;
+}
+
+.controls button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s ease;
+}
+
+/* Start and Update buttons */
+.controls button:not(:last-child) {
+  background-color: #2ecc71;
+  color: white;
+}
+
+.controls button:not(:last-child):hover {
+  background-color: #27ae60;
+}
+
+/* Stop button */
+.controls button:last-child {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.controls button:last-child:hover {
+  background-color: #c0392b;
+}
+
+/* Disabled state */
+.controls button:disabled {
+  background-color: #95a5a6;
+  cursor: not-allowed;
 }

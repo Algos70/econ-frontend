@@ -6,6 +6,8 @@ import 'react-toastify/dist/ReactToastify.css'
 import './App.css'
 import TradeParametersForm, { TradeParameters } from './components/TradeParametersForm'
 import BacktestPanel from './components/BacktestPanel'
+import Header from './components/Header'
+import TradingControls from './components/TradingControls'
 
 const SYMBOLS = ['ETHUSDT', 'BTCUSDT', 'AVAXUSDT', 'SOLUSDT', 'RENDERUSDT', 'FETUSDT']
 const API_URL = 'http://127.0.0.1:5000'
@@ -173,48 +175,39 @@ function App() {
         pauseOnHover
         theme="dark"
       />
-      <div className="header">
-        <h1>Crypto Trading Dashboard</h1>
-        <div className="view-controls">
-          <button onClick={() => setShowBacktest(false)}>Live Trading</button>
-          <button onClick={() => setShowBacktest(true)}>Backtest</button>
-        </div>
-        <TradeParametersForm onSubmit={setTradeParameters} />
-        {!showBacktest ? (
-          <div className="controls">
-            {!isTrading ? (
-              <button onClick={startTrading}>Start Trading</button>
-            ) : (
-              <button onClick={updateTrading}>Update Trading</button>
-            )}
-            <button onClick={stopTrading}>Stop Trading</button>
+      <Header
+        showBacktest={showBacktest}
+        setShowBacktest={setShowBacktest}
+      />
+      <main className="main-content">
+        <TradingControls
+          isTrading={isTrading}
+          showBacktest={showBacktest}
+          isBacktesting={isBacktesting}
+          setTradeParameters={setTradeParameters}
+          startTrading={startTrading}
+          updateTrading={updateTrading}
+          stopTrading={stopTrading}
+          runAllBacktests={runAllBacktests}
+        />
+        {showBacktest ? (
+          <div className="panels-grid">
+            {Object.keys(backtestResults).map((symbol) => (
+              <div key={symbol}>
+                <BacktestPanel symbol={symbol} results={backtestResults[symbol]} />
+              </div>
+            ))}
           </div>
         ) : (
-          <div className="controls">
-            <button onClick={runAllBacktests} disabled={isBacktesting}>
-              {isBacktesting ? 'Running Backtests...' : 'Run All Backtests'}
-            </button>
+          <div className="panels-grid">
+            {SYMBOLS.map((symbol) => (
+              <div key={symbol}>
+                {socket && <TradingPanel socket={socket} symbol={symbol} />}
+              </div>
+            ))}
           </div>
         )}
-      </div>
-      
-      {showBacktest ? (
-        <div className="panels-grid">
-          {Object.keys(backtestResults).map((symbol) => (
-            <div key={symbol}>
-              <BacktestPanel symbol={symbol} results={backtestResults[symbol]} />
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div className="panels-grid">
-          {SYMBOLS.map((symbol) => (
-            <div key={symbol}>
-              {socket && <TradingPanel socket={socket} symbol={symbol} />}
-            </div>
-          ))}
-        </div>
-      )}
+      </main>
     </div>
   )
 }

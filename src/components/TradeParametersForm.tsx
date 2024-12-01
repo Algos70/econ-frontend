@@ -27,10 +27,10 @@ function TradeParametersForm({ onSubmit }: TradeParametersFormProps) {
     const { name, value } = e.target;
     const cleanedValue = value.replace(/^0+(?=\d)/, '');
     
-    // Keep the empty string in local state
+    // Keep the empty string or number in local state
     setParameters(prev => ({
       ...prev,
-      [name]: cleanedValue
+      [name]: cleanedValue === '' ? '' : Number(cleanedValue)
     }));
 
     // Send number to parent (convert empty string to 0)
