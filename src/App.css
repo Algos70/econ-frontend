@@ -1,5 +1,5 @@
 #root {
-  max-width: 1280px;
+  max-width: 100%;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
@@ -46,6 +46,9 @@
   background-color: #1a1a1a;
   min-height: 100vh;
   color: white;
+  max-width: 2400px;
+  width: 95vw;
+  margin: 0 auto;
 }
 
 .header {
@@ -80,8 +83,9 @@
 
 .panels-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(800px, 1fr));
+  grid-template-columns: 1fr;
   gap: 20px;
+  width: 100%;
 }
 
 .trade-parameters-form {
@@ -195,20 +199,23 @@
 
 .backtest-chart {
   background: rgba(0, 0, 0, 0.2);
-  padding: 20px;
+  padding: 15px;
   border-radius: 8px;
+  margin-bottom: 15px;
+  height: 600px;
 }
 
 .timeframes-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+  grid-template-columns: 1fr;
+  gap: 30px;
 }
 
 .timeframe-chart {
   background: rgba(0, 0, 0, 0.2);
-  padding: 15px;
+  padding: 20px;
   border-radius: 8px;
+  min-height: 500px;
 }
 
 .backtest-panel h2 {
