@@ -62,9 +62,11 @@ export default function BacktestPanel({ symbol, results }: BacktestPanelProps) {
           label: 'Price',
           data: df.map((row: any) => ({ x: new Date(row.Date), y: row.Close })),
           borderColor: 'rgb(75, 192, 192)',
+          backgroundColor: 'rgba(75, 192, 192, 0.1)',
           tension: 0.1,
           pointRadius: 0,
-          borderWidth: 1,
+          borderWidth: 2,
+          fill: true,
           order: 1
         },
         {
@@ -97,11 +99,39 @@ export default function BacktestPanel({ symbol, results }: BacktestPanelProps) {
 
   const chartOptions = (timeframe: string) => ({
     responsive: true,
+    maintainAspectRatio: false,
     scales: {
       x: {
         type: 'time' as const,
         time: {
-          unit: 'day' as const
+          unit: 'day' as const,
+          displayFormats: {
+            day: 'MMM d, yyyy'
+          }
+        },
+        grid: {
+          color: 'rgba(255, 255, 255, 0.1)'
+        },
+        ticks: {
+          font: {
+            size: 12
+          },
+          maxRotation: 45,
+          minRotation: 45
+        }
+      },
+      y: {
+        position: 'right' as const,
+        grid: {
+          color: 'rgba(255, 255, 255, 0.1)'
+        },
+        ticks: {
+          font: {
+            size: 12
+          },
+          callback: function(value: any) {
+            return '$' + value.toFixed(2);
+          }
         }
       }
     },
@@ -110,22 +140,64 @@ export default function BacktestPanel({ symbol, results }: BacktestPanelProps) {
         display: true,
         text: `${symbol} - ${timeframe}`,
         font: {
-          size: 16
-        }
+          size: 20,
+          weight: 'bold'
+        },
+        padding: 20
       },
       legend: {
         labels: {
           font: {
             size: 14
+          },
+          padding: 15
+        },
+        position: 'top' as const
+      },
+      tooltip: {
+        mode: 'index',
+        intersect: false,
+        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+        titleFont: {
+          size: 14
+        },
+        bodyFont: {
+          size: 13
+        },
+        padding: 12,
+        callbacks: {
+          label: function(context: any) {
+            let label = context.dataset.label || '';
+            if (label) {
+              label += ': ';
+            }
+            if (context.parsed.y !== null) {
+              label += new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD'
+              }).format(context.parsed.y);
+            }
+            return label;
           }
         }
       }
     },
+    interaction: {
+      mode: 'nearest',
+      axis: 'x',
+      intersect: false
+    },
     elements: {
       point: {
-        hitRadius: 8,
-        hoverRadius: 14
+        hitRadius: 10,
+        hoverRadius: 15
+      },
+      line: {
+        tension: 0.1
       }
+    },
+    animation: {
+      duration: 1000
     }
   });
 

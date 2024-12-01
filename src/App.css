@@ -82,9 +82,9 @@
 }
 
 .panels-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
   width: 100%;
 }
 
@@ -199,23 +199,26 @@
 
 .backtest-chart {
   background: rgba(0, 0, 0, 0.2);
-  padding: 15px;
+  padding: 20px;
   border-radius: 8px;
   margin-bottom: 15px;
-  height: 600px;
+  height: 800px;
 }
 
 .timeframes-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 100%;
 }
 
 .timeframe-chart {
+  display: flex;
+  flex-direction: column;
   background: rgba(0, 0, 0, 0.2);
-  padding: 20px;
+  padding: 30px;
   border-radius: 8px;
-  min-height: 500px;
+  min-height: 700px;
 }
 
 .backtest-panel h2 {
