@@ -215,6 +215,7 @@ export default function BacktestPanel({ symbol, results }: BacktestPanelProps) {
               <p>Initial: ${results[timeframe].initial_amount}</p>
               <p>Final: ${results[timeframe].money.toFixed(2)}</p>
               <p>Profit: ${results[timeframe].profit.toFixed(2)}</p>
+              <p>Total Trades: {results[timeframe].signals.length}</p>
             </div>
             <div className="backtest-chart">
               {prepareChartData(timeframe) && (
