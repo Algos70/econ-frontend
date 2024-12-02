@@ -1,50 +1,93 @@
-# React + TypeScript + Vite
+# Econ Trade Bot Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The React-based frontend interface for the Econ Trade Bot project, providing real-time trading visualization, backtesting analysis, and trading parameter controls.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Real-time trading visualization for multiple cryptocurrency pairs (ETH, BTC, AVAX, SOL, RENDER, FET)
+- Live candlestick charts with WebSocket integration
+- Trading signals console with real-time updates
+- Comprehensive backtesting interface with multiple timeframes (15m, 1h, 4h, 1d)
+- Interactive trading parameter controls
+- Performance tracking and profit/loss monitoring
 
-## Expanding the ESLint configuration
+## Technical Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- React + TypeScript
+- Vite for build tooling
+- Socket.IO for real-time data
+- Lightweight Charts for candlestick visualization
+- Chart.js for backtesting results
+- React-Toastify for notifications
 
-- Configure the top-level `parserOptions` property like this:
+## Installation
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+1. Clone the repository:
+
+```bash
+git clone git@github.com:Algos70/econ-trade-bot.git
+cd econ-frontend
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+2. Install dependencies:
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```bash
+npm install
 ```
+
+3. Start the development server:
+
+```bash
+npm run dev
+```
+
+## Usage
+
+Ensure the backend server is running at `http://127.0.0.1:5000` before starting the frontend.
+
+### Trading Parameters
+
+You can adjust the following strategy parameters in real-time:
+- Long-term SMA period (default: 20)
+- Short-term SMA period (default: 8)
+- RSI period (default: 8)
+- Bollinger Bands length (default: 20)
+- RSI oversold threshold (default: 30)
+- RSI overbought threshold (default: 70)
+
+### Available Views
+
+1. Live Trading View:
+   - Real-time candlestick charts
+   - Trading signals console
+   - Current position and performance metrics
+
+2. Backtesting View:
+   - Historical performance analysis
+   - Multiple timeframe testing
+   - Trade signal visualization
+   - Profit/loss metrics
+
+## Development
+
+### Building for Production
+
+```bash
+npm run build
+```
+
+### Type Checking
+
+```bash
+npm run typecheck
+```
+
+## Integration
+
+This frontend interfaces with the Econ Trade Bot backend through:
+- REST API endpoints for trading controls and backtesting
+- WebSocket connections for real-time price and trading data
+
+## Disclaimer
+
+This application is part of an educational project for Engineering Economics class. Cryptocurrency trading carries significant risks. Use at your own discretion.
