@@ -25,7 +25,7 @@ The React-based frontend interface for the Econ Trade Bot project, providing rea
 1. Clone the repository:
 
 ```bash
-git clone git@github.com:Algos70/econ-trade-bot.git
+git clone git@github.com:Algos70/econ-frontend.git
 cd econ-frontend
 ```
 
